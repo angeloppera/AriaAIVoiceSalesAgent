@@ -17,7 +17,7 @@ export default function AdminLogin() {
     try {
       const fd = new FormData()
       fd.append('password', password)
-      const res = await fetch('/api/admin/login', { method: 'POST', body: fd })
+      const res = await fetch(`${BASE}/admin/login`, { method: 'POST', body: fd })
       if (res.ok) {
         const data = await res.json()
         sessionStorage.setItem('admin_token', data.token)
