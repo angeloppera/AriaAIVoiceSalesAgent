@@ -1,6 +1,8 @@
+const BASE = `${import.meta.env.VITE_API_URL || ''}/api`
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './admin.css'
+
 
 export default function AdminLogin() {
   const [password, setPassword] = useState('')
