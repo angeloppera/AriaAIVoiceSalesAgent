@@ -10,4 +10,7 @@ export default defineConfig({
       '/ws':  { target: 'ws://localhost:8000', ws: true },
     },
   },
+  define: {
+    __API_URL__: JSON.stringify(process.env.VITE_API_URL || 'https://ariaaivoicesalesagent.onrender.com'),
+  }
 })
