@@ -59,7 +59,10 @@ app = FastAPI(
 origins = [o.strip() for o in settings.cors_origins.split(",")]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[
+        "http://localhost:5173",
+        "https://ariaaivoicesalesagent-1.onrender.com",  # add this
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
