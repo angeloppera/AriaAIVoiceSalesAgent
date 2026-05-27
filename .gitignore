@@ -1,0 +1,10 @@
+# Create .gitignore first
+.env
+.venv/
+__pycache__/
+*.pyc
+.assistant_id
+.vector_store_id
+node_modules/
+dist/
+*.log" > .gitignore
