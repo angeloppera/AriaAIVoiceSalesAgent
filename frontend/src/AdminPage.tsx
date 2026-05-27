@@ -1,3 +1,4 @@
+const BASE = `${import.meta.env.VITE_API_URL || ''}/api`
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
