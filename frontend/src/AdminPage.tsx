@@ -147,8 +147,8 @@ export default function AdminPage() {
   const updateStatus = async (docId: string, status: string, type: 'lead' | 'transaction') => {
     const fd = new FormData(); fd.append('status', status)
     const ep = type === 'lead'
-      ? `/api/leads/${encodeURIComponent(docId)}/status`
-      : `/api/transactions/${encodeURIComponent(docId)}/status`
+      ? `${BASE}/api/leads/${encodeURIComponent(docId)}/status`
+      : `${BASE}/api/transactions/${encodeURIComponent(docId)}/status`
     await fetch(ep, { method: 'PATCH', body: fd })
     loadData()
   }
