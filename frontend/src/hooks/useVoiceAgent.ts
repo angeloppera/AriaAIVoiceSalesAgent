@@ -5,7 +5,7 @@
  *
  * This ensures the displayed text always matches exactly what Aria says.
  */
-
+const BASE = `${import.meta.env.VITE_API_URL || ''}/api`
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createSession, transcribeAudio, getTextResponse, textToAudio } from '../lib/api'
 
