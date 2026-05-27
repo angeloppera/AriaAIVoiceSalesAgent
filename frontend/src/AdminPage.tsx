@@ -122,7 +122,7 @@ export default function AdminPage() {
   useEffect(() => {
     const token = sessionStorage.getItem('admin_token')
     if (!token) { navigate('/admin/login'); return }
-    fetch(`/api/admin/verify?token=${encodeURIComponent(token)}`)
+    fetch(`${BASE}/api/admin/verify?token=${encodeURIComponent(token)}`)
       .then(r => { if (!r.ok) navigate('/admin/login') })
       .catch(() => navigate('/admin/login'))
   }, [navigate])
@@ -133,8 +133,8 @@ export default function AdminPage() {
     setLoading(true); setError(null)
     try {
       const [dashRes, leadsRes, txRes, convRes] = await Promise.all([
-        fetch('/api/dashboard'), fetch('/api/leads'),
-        fetch('/api/transactions'), fetch('/api/conversations'),
+        fetch('${BASE}/api/dashboard'), fetch('${BASE}/api/leads'),
+        fetch('${BASE}/api/transactions'), fetch('${BASE}/api/conversations'),
       ])
       if (dashRes.ok) setStats(await dashRes.json())
       if (leadsRes.ok) setLeads((await leadsRes.json()).leads || [])
@@ -158,7 +158,7 @@ export default function AdminPage() {
     setUploading(true); setUploadMsg(null)
     const fd = new FormData(); fd.append('file', file); fd.append('knowledge_base_id', 'global')
     try {
-      const res = await fetch('/api/upload-document', { method: 'POST', body: fd })
+      const res = await fetch('${BASE}/api/upload-document', { method: 'POST', body: fd })
       const data = await res.json()
       setUploadMsg(res.ok ? `✓ "${data.filename}" indexed.` : `✗ ${data.detail ?? 'Failed'}`)
     } catch (e: any) { setUploadMsg(`✗ ${e.message}`) }
@@ -169,7 +169,7 @@ export default function AdminPage() {
     if (!window.confirm("Reset Aria's knowledge base? All documents will be deleted.")) return
     setResetting(true); setUploadMsg(null)
     try {
-      const res = await fetch('/api/knowledge-base', { method: 'DELETE' })
+      const res = await fetch('${BASE}/api/knowledge-base', { method: 'DELETE' })
       const data = await res.json()
       setUploadMsg(res.ok ? `✓ Reset done. ${data.deleted_files} file(s) removed.` : `✗ ${data.detail}`)
     } catch (e: any) { setUploadMsg(`✗ ${e.message}`) }
@@ -244,9 +244,9 @@ export default function AdminPage() {
                conversations: 'Conversations', knowledge: 'Knowledge base' }[tab]}
           </h1>
           <div style={{ display: 'flex', gap: 8 }}>
-            {tab === 'transactions' && <button className="topbar-btn" onClick={() => window.open('/api/transactions/export')}><i className="ti ti-download" style={{ fontSize: 14 }} aria-hidden></i> Export CSV</button>}
-            {tab === 'leads' && <button className="topbar-btn" onClick={() => window.open('/api/leads/export')}><i className="ti ti-download" style={{ fontSize: 14 }} aria-hidden></i> Export CSV</button>}
-            {tab === 'conversations' && <button className="topbar-btn" onClick={() => window.open('/api/conversations/export')}><i className="ti ti-download" style={{ fontSize: 14 }} aria-hidden></i> Export CSV</button>}
+            {tab === 'transactions' && <button className="topbar-btn" onClick={() => window.open(`${import.meta.env.VITE_API_URL || ''}/api/transactions/export`)}><i className="ti ti-download" style={{ fontSize: 14 }} aria-hidden></i> Export CSV</button>}
+            {tab === 'leads' && <button className="topbar-btn" onClick={() => window.open(`${import.meta.env.VITE_API_URL || ''}/api/leads/export`)}><i className="ti ti-download" style={{ fontSize: 14 }} aria-hidden></i> Export CSV</button>}
+            {tab === 'conversations' && <button className="topbar-btn" onClick={() => window.open(`${import.meta.env.VITE_API_URL || ''}/api/conversations/export`)}><i className="ti ti-download" style={{ fontSize: 14 }} aria-hidden></i> Export CSV</button>}
             <button className="topbar-btn" onClick={loadData}><i className="ti ti-refresh" style={{ fontSize: 14 }} aria-hidden></i> Refresh</button>
           </div>
         </div>
